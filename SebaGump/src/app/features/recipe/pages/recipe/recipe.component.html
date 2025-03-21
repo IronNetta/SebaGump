@@ -1,0 +1,59 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Liste des Recettes</h2>
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col" *ngFor="let recette of recettes">
+      <div class="card h-100 shadow-sm d-flex flex-column">
+        <img [src]="recette.imageUrl" class="card-img-top img-fluid" alt="Image de la recette" style="height: 200px; object-fit: cover;">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ recette.titre }}</h5>
+          <p class="card-text flex-grow-1">{{ recette.description }}</p>
+          <button class="btn btn-primary mt-auto" (click)="voirDetails(recette)">Voir Détails</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <h2 class="text-center mt-4">Ajouter une Recette</h2>
+  <div class="card shadow p-4 mt-3 col-md-6 mx-auto">
+    <form (ngSubmit)="ajouterRecette()">
+      <div class="mb-3">
+        <label for="titre" class="form-label">Titre</label>
+        <input type="text" id="titre" class="form-control form-control-lg" [(ngModel)]="nouvelleRecette.titre" name="titre" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea id="description" class="form-control form-control-lg" [(ngModel)]="nouvelleRecette.description" name="description" required></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="image" class="form-label">Image (URL)</label>
+        <input type="text" id="image" class="form-control form-control-lg" [(ngModel)]="nouvelleRecette.imageUrl" name="image" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Ingrédients</label>
+        <div *ngFor="let ingredient of nouvelleRecette.ingredients; let i = index" class="input-group mb-2">
+          <input type="text" class="form-control" [(ngModel)]="ingredient.nom" name="ingredient-{{i}}" placeholder="Nom" required>
+          <input type="text" class="form-control" [(ngModel)]="ingredient.quantite" name="quantite-{{i}}" placeholder="Quantité" required>
+          <button type="button" class="btn btn-danger" (click)="supprimerIngredient(i)">X</button>
+        </div>
+        <button type="button" class="btn btn-success w-100" (click)="ajouterIngredient()">Ajouter un ingrédient</button>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Étapes</label>
+        <div *ngFor="let etape of nouvelleRecette.etapes; let i = index" class="input-group mb-2">
+          <input type="text" class="form-control" [(ngModel)]="etape.description" name="etape-{{i}}" placeholder="Description" required>
+          <button type="button" class="btn btn-danger" (click)="supprimerEtape(i)">X</button>
+        </div>
+        <button type="button" class="btn btn-success w-100" (click)="ajouterEtape()">Ajouter une étape</button>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Ajouter la Recette</button>
+    </form>
+  </div>
+</div>
