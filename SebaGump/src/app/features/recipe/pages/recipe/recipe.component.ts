@@ -41,15 +41,27 @@ export class RecipeComponent implements OnInit {
   }
 
   chargerRecettes(): void {
-    this.http.get<Recette[]>('http://localhost:8080/api/recettes')
+    this.http.get<Recette[]>('http://localhost:8000/api/recettes')
       .subscribe(data => this.recettes = data);
   }
 
   ajouterRecette(): void {
-    this.http.post<Recette>('http://localhost:8080/api/recettes', this.nouvelleRecette)
+    this.http.post<Recette>('http://localhost:8000/api/recettes', this.nouvelleRecette)
       .subscribe(data => {
         this.recettes.push(data);
         this.nouvelleRecette = this.getRecetteVide();
+      });
+  }
+
+  supprimerRecette(id?: number): void {
+    if (id === undefined) {
+      console.error("Impossible de supprimer la recette : ID manquant");
+      return;
+    }
+
+    this.http.delete(`http://localhost:8000/api/recettes/${id}`)
+      .subscribe(() => {
+        this.recettes = this.recettes.filter(recette => recette.id !== id);
       });
   }
 

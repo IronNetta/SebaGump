@@ -3,19 +3,32 @@
   <div class="row">
     <!-- Formulaire de contact -->
     <div class="col-md-6">
-      <form>
+      <form (ngSubmit)="envoyerFormulaire()">
         <div class="mb-3">
           <label for="name" class="form-label">Nom</label>
-          <input type="text" class="form-control" id="name" placeholder="Entrez votre nom" required>
+          <input type="text" class="form-control" id="name" [(ngModel)]="formulaire.nom" name="nom" required>
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" placeholder="Entrez votre email" required>
+          <input type="email" class="form-control" id="email" [(ngModel)]="formulaire.email" name="email" required>
         </div>
         <div class="mb-3">
           <label for="message" class="form-label">Message</label>
-          <textarea class="form-control" id="message" rows="5" placeholder="Entrez votre message" required></textarea>
+          <textarea class="form-control" id="message" rows="5" [(ngModel)]="formulaire.message" name="message" required></textarea>
         </div>
+
+        <!-- Checkbox pour le rendez-vous -->
+        <div class="form-check mb-3">
+          <input type="checkbox" class="form-check-input" id="prendreRdv" [(ngModel)]="formulaire.prendreRdv" name="prendreRdv" (change)="toggleDateRdv()">
+          <label class="form-check-label" for="prendreRdv">Prendre un rendez-vous</label>
+        </div>
+
+        <!-- Champ de date (s'affiche uniquement si la checkbox est cochée) -->
+        <div class="mb-3" *ngIf="afficherDate">
+          <label for="dateRdv" class="form-label">Date du rendez-vous</label>
+          <input type="datetime-local" class="form-control" id="dateRdv" [(ngModel)]="formulaire.dateRdv" name="dateRdv" required>
+        </div>
+
         <button type="submit" class="btn btn-primary w-100">Envoyer</button>
       </form>
     </div>

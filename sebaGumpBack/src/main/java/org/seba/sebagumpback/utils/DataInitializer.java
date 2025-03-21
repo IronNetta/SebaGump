@@ -59,7 +59,25 @@ public class DataInitializer implements CommandLineRunner {
                     new Etape("Servir avec une sauce au citron.")
             ));
 
-            recetteRepository.saveAll(List.of(recette1, recette2));
+            Recette recette3 = new Recette();
+            recette1.setTitre("Risotto aux Crevettes");
+            recette1.setDescription("Un délicieux risotto crémeux aux crevettes.");
+            recette1.setImageUrl("https://www.iterroir.fr/images/photos-recettes/recette-risotto-curry-scampis.jpg");
+            recette1.setIngredients(List.of(
+                    new Ingredient("Crevettes", "200g"),
+                    new Ingredient("Riz Arborio", "150g"),
+                    new Ingredient("Bouillon de volaille", "500ml"),
+                    new Ingredient("Parmesan", "50g")
+            ));
+            recette1.setEtapes(List.of(
+                    new Etape("Faire revenir les crevettes dans du beurre."),
+                    new Etape("Ajouter le riz et le nacrer 2 minutes."),
+                    new Etape("Incorporer le bouillon progressivement."),
+                    new Etape("Ajouter le parmesan et mélanger.")
+            ));
+
+
+            recetteRepository.saveAll(List.of(recette1, recette2, recette3));
 
             System.out.println("✅ Base de données peuplée avec succès !");
         }
